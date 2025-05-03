@@ -1,6 +1,6 @@
 # 🎸 boochi.fans
 
-![website](https://img.shields.io/badge/site-boochi.fans-ff69b4?logo=google-chrome)
+[![website](https://img.shields.io/badge/site-boochi.fans-ff69b4?logo=google-chrome)](boochi.fans)
 
 > 🧍‍♀️「一个人的乐队也能响彻世界。」
 

@@ -349,6 +349,38 @@
             margin-bottom: 1rem;
         }
 
+        .relation-card img {
+            width: 100%;
+            height: 500px; /* 固定高度 */
+            object-fit: contain; /* 完整显示图片 */
+            object-position: center bottom; /* 人物脚部对齐容器底部 */
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+            transition: transform 0.3s ease;
+            background: rgba(255,255,255,0.03); /* 添加浅色背景 */
+            border-radius: 12px;
+            padding: 10px; /* 增加内边距 */
+        }
+
+
+        /* 调整卡片高度 */
+        .relation-card {
+            flex: 0 0 320px;
+            padding: 1.5rem;
+            min-height: 480px; /* 增加最小高度 */
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .relation-card {
+                flex-basis: 280px;
+                min-height: 420px; /* 缩小移动端高度 */
+            }
+            .relation-card img {
+                height: 200px; /* 缩小移动端图片高度 */
+            }
+        }
+
         /* 人物性格列表 */
          .card ul {
             list-style: none;
@@ -622,14 +654,17 @@
             <h2 id="relations-heading">人际关系</h2>
             <div class="relation-scroll">
                 <div class="relation-card">
+                    <img src="https://s1.imagehub.cc/images/2025/05/03/4091bea3d40226ea649db6c924ca1b50.webp" alt="喜多郁代 立绘">
                     <h3>喜多郁代 (Kita Ikuyo)</h3>
                     <p>「结束乐队」的主唱兼节奏吉他手，阳光开朗的现充美少女，社交能力点满。最初为了接近心仪的凉而加入乐队，后来真心爱上乐队和音乐。她是波奇酱生命中如同太阳般的存在，用她的活力和直率不断敲开波奇封闭的心门。两人在互相影响中共同成长，是波奇在乐队中最亲近的朋友之一。</p>
                 </div>
                 <div class="relation-card">
+                    <img src="https://s1.imagehub.cc/images/2025/05/03/726b11a2131e92f05f2360c0303fe2d1.webp" alt="伊地知虹夏 立绘">
                     <h3>伊地知虹夏 (Ijichi Nijika)</h3>
                     <p>「结束乐队」的鼓手和团队核心，性格温柔体贴，是乐队的“妈妈”和粘合剂。她是发掘波奇才能并将她“捡”进乐队的关键人物。虹夏无微不至的关怀和鼓励是支撑波奇前进的重要力量。她继承姐姐的梦想，决心让“结束乐队”成为出色的乐队。</p>
                 </div>
                 <div class="relation-card">
+                    <img src="https://s1.imagehub.cc/images/2025/05/03/d8763d9b7e3cfb4a6b53806b1214c336.webp" alt="山田凉 立绘">
                     <h3>山田凉 (Yamada Ryō)</h3>
                     <p>「结束乐队」的贝斯手和作曲担当，来自富裕家庭却特立独行，常常做出吃草等怪异行为。外表冷酷少言，内心却很重视朋友和音乐。她是波奇音乐上的知音，最早认可波奇的吉他实力。虽然有时会说出“你的社恐很有趣”之类的话吓到波奇，但总能在关键时刻给予冷静而中肯的建议。</p>
                 </div>

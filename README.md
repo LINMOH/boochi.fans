@@ -1,5 +1,7 @@
 # 🎸 boochi.fans
 
+![website](https://img.shields.io/badge/site-boochi.fans-ff69b4?logo=google-chrome)
+
 > 🧍‍♀️「一个人的乐队也能响彻世界。」
 
 **boochi.fans** 是一个为《孤独摇滚！（ぼっち・ざ・ろっく！）》主角 —— 后藤一里（波奇酱）打造的非官方粉丝网站。  

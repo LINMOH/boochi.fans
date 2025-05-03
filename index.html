@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ぼっちランド - Hitori Gotō Fan Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 优化色彩和渐变 */
+            --gradient-1: linear-gradient(135deg, #ff8ac5 0%, #8c75ff 100%); /* 更柔和的粉紫 */
+            --gradient-2: linear-gradient(45deg, #1f1f2b 0%, #14141c 100%); /* 深邃背景渐变 */
+            --bg-color: #0a0a0e; /* 更深的背景色 */
+            --text-color: rgba(240, 240, 245, 0.95); /* 更清晰的主要文本色 */
+            --text-muted: rgba(240, 240, 245, 0.65); /* 次要文本色 */
+            --accent: #8c75ff; /* 主强调色 */
+            --accent-secondary: #ff8ac5; /* 次强调色 (来自渐变) */
+            --card-bg: rgba(25, 25, 35, 0.75); /* 卡片背景，增加透明度 */
+            --border-color: rgba(255, 255, 255, 0.12); /* 边框颜色 */
+            --shadow-color: rgba(0, 0, 0, 0.4); /* 阴影颜色 */
+            --accent-glow: rgba(140, 117, 255, 0.3); /* 强调色辉光 */
+
+            /* 新增孤独摇滚主题渐变 */
+            --main-bg-gradient: linear-gradient(
+              135deg,
+              #1a0f2c 0%,   /* 深紫色（对应波奇酱发色暗部） */
+              #2d1a3c 25%,  /* 紫罗兰暗调 */
+              #0d0b16 50%,  /* 深夜蓝 */
+              #2b1a2a 75%,  /* 酒红暗调 */
+              #1a0f2c 100%  /* 循环起始色 */
+            );
+
+            /* 微调现有变量增强对比 */
+            --bg-color: #0a0a0e;
+            --card-bg: rgba(35, 28, 48, 0.85); /* 带紫调的半透明卡片 */
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* 更全面的字体栈 */
+        }
+
+        html {
+             scroll-behavior: smooth; /* 平滑滚动 */
+        }
+
+        body {
+              background: var(--main-bg-gradient),
+                          radial-gradient(
+                            circle at 90% 10%,
+                            rgba(255, 80, 150, 0.15) 0%,  /* 波奇粉光晕 */
+                            transparent 40%
+                          ),
+                          radial-gradient(
+                            circle at 10% 90%,
+                            rgba(100, 80, 255, 0.1) 0%,   /* 乐队紫光晕 */
+                            transparent 40%
+                          );
+              background-attachment: fixed;
+              background-size: cover;
+              min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            background: rgba(13, 13, 18, 0.5); /* 轻微调整透明度 */
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(8px) saturate(150%); /* 增强模糊效果 */
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .logo {
+            font-size: 1.9rem; /* 稍微增大 */
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.04em; /* 调整字间距 */
+            cursor: default; /* 添加默认光标 */
+        }
+
+        header a {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        header a:hover {
+            opacity: 0.8;
+            transform: scale(1.1);
+        }
+
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            /* 优化遮罩，使其更平滑融入下方内容 */
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        }
+
+        .carousel-inner {
+            display: flex;
+            height: 100%; /* 改为 100% */
+            /* 动画时间加长，更平稳 */
+            animation: carousel 40s infinite linear;
+        }
+
+        .carousel-item {
+            min-width: 100vw;
+            height: 100%; /* 改为 100% */
+            background-size: cover;
+            background-position: center;
+            filter: saturate(0.85) contrast(1.05) brightness(0.95); /* 微调滤镜 */
+            position: relative;
+        }
+
+        .carousel-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            /* 优化叠加层渐变 */
+            background: linear-gradient(45deg, rgba(10, 10, 14, 0.7) 0%, rgba(10, 10, 14, 0.1) 60%, transparent 100%);
+        }
+
+        /* 调整轮播动画时间分布，停留更久 */
+        @keyframes carousel {
+            0%, 15% { transform: translateX(0); }       /* Image 1 */
+            20%, 35% { transform: translateX(-100%); }  /* Image 2 */
+            40%, 55% { transform: translateX(-200%); }  /* Image 3 */
+            60%, 75% { transform: translateX(-300%); }  /* Image 4 */
+            80%, 95% { transform: translateX(-400%); }  /* Image 5 */
+            100% { transform: translateX(-500%); }     /* Loop back */
+        }
+
+        .content {
+            max-width: 1100px; /* 稍微缩小最大宽度 */
+            margin: -12rem auto 0; /* 调整负边距使内容与Hero融合更好 */
+            padding: 0 1.5rem; /* 调整内边距 */
+            position: relative;
+            z-index: 10; /* 低于header */
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 2.5rem 3rem; /* 增加左右内边距 */
+            margin: 3rem 0; /* 增加卡片间距 */
+            border-radius: 28px; /* 更圆润的边角 */
+            backdrop-filter: blur(24px) saturate(180%); /* 增强背景模糊 */
+            border: 1px solid var(--border-color);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+                        box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+                        border-color 0.4s ease;
+            box-shadow: 0 10px 30px var(--shadow-color); /* 优化阴影 */
+            overflow: hidden; /* 防止内部绝对定位元素溢出 */
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.015); /* 更明显的悬停效果 */
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35), 0 0 35px var(--accent-glow); /* 添加强调色辉光 */
+            border-color: rgba(140, 117, 255, 0.6); /* 高亮边框 */
+        }
+
+        h1 {
+            font-size: 3.6rem; /* 调整大小 */
+            margin: 1rem 0 2rem; /* 调整边距 */
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.25;
+            letter-spacing: -0.04em; /* 调整字间距 */
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.1rem; /* 调整大小 */
+            margin: 0 0 1.8rem; /* **调整标题下边距，移除上边距由容器或卡片控制** */
+            position: relative;
+            padding-left: 1.5rem; /* 增加左内边距 */
+            font-weight: 700;
+            color: var(--text-color); /* 确保标题颜色 */
+        }
+
+        h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px; /* 加粗 */
+            height: 75%; /* 调整高度 */
+            background: var(--accent);
+            border-radius: 3px; /* 圆角 */
+        }
+
+        /* 通用段落样式 */
+        p, .profile-item p, .relation-card p {
+            color: var(--text-muted);
+            line-height: 1.9; /* 增加行高提高可读性 */
+            margin-bottom: 1rem; /* 段落间距 */
+        }
+        .card p:last-child {
+             margin-bottom: 0;
+        }
+
+        /* START: Profile Card with Tachi-e Styles */
+        .profile-layout-container {
+            display: grid;
+            /* 桌面端：图片占大约 1/3 多一点，文字占剩余空间 */
+            grid-template-columns: minmax(200px, 1fr) 2fr;
+            gap: 2.5rem; /* 图片和文字之间的间隙 */
+            align-items: center; /* 垂直居中对齐 */
+            margin-top: 2.5rem; /* 与 H2 标题的间距 */
+        }
+
+        .profile-tachi-e {
+            text-align: center; /* 图片居中 */
+            position: relative;
+            max-width: 280px; /* 调整立绘最大宽度 */
+            margin: 0 auto; /* 在网格单元内居中 */
+            align-self: end; /* 让立绘底部对齐网格线 */
+        }
+
+        .profile-tachi-e img {
+            display: block;
+            max-width: 100%;
+            height: auto; /* 保持图片比例 */
+            /* 添加立绘阴影 */
+            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .profile-tachi-e img:hover {
+             transform: scale(1.04) translateY(-5px); /* 悬停时轻微放大和上移 */
+        }
+
+        .tachi-e-caption { /* 可选的图片说明样式 */
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* 调整 profile-grid 在新布局内的样式 */
+        .profile-layout-container .profile-grid {
+            margin-top: 0; /* 移除 grid 自身的上边距 */
+            padding: 0; /* 移除 grid 的内边距，由容器控制 */
+            background: none; /* 移除 grid 的背景色 */
+            border-radius: 0; /* 移除 grid 的圆角 */
+            gap: 1.5rem; /* 调整 grid 内部项目间距 */
+            /* 确保 profile-item 背景能显示 */
+            grid-template-columns: 1fr; /* 在容器的第二列内，profile-grid 本身按单列排列 */
+        }
+        /* 确保 profile-item 样式正常 */
+         .profile-layout-container .profile-item {
+             background: rgba(255, 255, 255, 0.04); /* 给 item 加回轻微背景 */
+             border-radius: 16px; /* 给 item 加回圆角 */
+             padding: 1.5rem 1.8rem;
+         }
+          .profile-layout-container .profile-item:hover {
+            background-color: rgba(140, 117, 255, 0.08);
+            border-color: var(--accent-secondary);
+         }
+
+        /* END: Profile Card with Tachi-e Styles */
+
+
+        /* 个人信息网格 (原始，可能不再直接使用，被上面覆盖) */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            margin-top: 1.5rem;
+        }
+
+        .profile-item {
+            padding: 1.5rem 1.8rem;
+            border-left: 4px solid var(--accent);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .profile-item:hover {
+            background-color: rgba(140, 117, 255, 0.08);
+            border-color: var(--accent-secondary);
+        }
+
+        .profile-item h3 {
+             font-size: 1.2rem;
+             font-weight: 500;
+             color: var(--text-color);
+             margin-bottom: 1rem;
+        }
+         .profile-item p {
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+         }
+         .profile-item p:last-child {
+             margin-bottom: 0;
+         }
+
+
+        /* 人际关系滚动区 */
+        .relation-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 1.8rem;
+            padding: 1.5rem 0.5rem;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) rgba(255, 255, 255, 0.05);
+        }
+        .relation-scroll::-webkit-scrollbar { height: 8px; }
+        .relation-scroll::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 4px; }
+        .relation-scroll::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; transition: background-color 0.3s ease; }
+        .relation-scroll::-webkit-scrollbar-thumb:hover { background: var(--accent-secondary); }
+
+        .relation-card {
+            flex: 0 0 320px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            scroll-snap-align: start;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .relation-card:hover {
+            transform: translateY(-6px);
+            background-color: rgba(255, 255, 255, 0.09);
+            box-shadow: 0 5px 15px rgba(0,0,0, 0.2);
+            border-color: var(--border-color);
+        }
+        .relation-card h3 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--accent-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* 人物性格列表 */
+         .card ul {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin-top: 1rem;
+         }
+         .card ul li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+         }
+         .card ul li::before {
+            content: '🎸';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--accent);
+            font-size: 1.1em;
+            line-height: 1;
+         }
+
+        /* 照片墙网格 */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            aspect-ratio: 3 / 4;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+                        box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+             box-shadow: 0 5px 15px rgba(0,0,0, 0.2);
+        }
+        .gallery-item img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0, 0.3);
+        }
+        .gallery-item:hover img {
+            transform: scale(1.15);
+            filter: brightness(1.05);
+        }
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 65%, rgba(0, 0, 0, 0.75) 100%);
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover::after { opacity: 1; }
+
+        /* 主要战绩 */
+        .achievements-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+        .achievement-card {
+            position: relative;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+            border: 1px solid transparent;
+            text-decoration: none; /* Ensure link itself isn't underlined */
+        }
+         .achievement-card a { /* Make link cover the card */
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+            background: rgba(140, 117, 255, 0.08);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(140, 117, 255, 0.1);
+        }
+        .achievement-image {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+            background: rgba(0,0,0,0.1); /* Add subtle background to image area */
+            margin-bottom: 1rem; /* Space between image and caption */
+        }
+        .achievement-card:hover .achievement-image {
+            transform: scale(1.05);
+        }
+        .achievement-caption {
+            text-align: center;
+            margin-top: 0; /* Removed top margin, use margin-bottom on image */
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        .achievement-card:hover .achievement-caption { opacity: 1; }
+        .achievement-footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 2rem; /* Space above footer text */
+        }
+
+        /* 视频容器 */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin: 3.5rem 0 2rem; /* 调整边距 */
+            border-radius: 20px; /* 圆角 */
+            overflow: hidden;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4); /* 更深的阴影 */
+            border: 1px solid var(--border-color); /* 添加边框 */
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 5rem 2rem 3rem; /* 增加上下内边距 */
+            background: var(--gradient-2); /* 使用背景渐变 */
+            margin-top: 8rem; /* 增加与内容的间距 */
+            position: relative;
+            border-top: 1px solid var(--border-color); /* 添加上边框 */
+        }
+        footer p {
+            margin-bottom: 0.8rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            font-weight: 500; /* 链接加粗一点 */
+        }
+        footer a:hover {
+            color: var(--accent-secondary); /* 悬停时变色 */
+            text-shadow: 0 0 10px var(--accent-glow); /* 添加辉光 */
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 992px) { /* Add breakpoint for tablet-like sizes */
+             .profile-layout-container {
+                 /* Adjust grid for slightly smaller screens if needed */
+                 grid-template-columns: minmax(180px, 1fr) 2fr;
+                 gap: 2rem;
+             }
+             .profile-tachi-e {
+                 max-width: 240px;
+             }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 1.8rem; }
+            .card { padding: 2rem 1.5rem; border-radius: 20px; }
+            .content { margin-top: -8rem; padding: 0 1rem; }
+
+            /* Profile Card Responsive */
+            .profile-layout-container {
+                grid-template-columns: 1fr; /* 变为单列布局 */
+                gap: 2rem; /* 调整间隙 */
+            }
+            .profile-tachi-e {
+                max-width: 200px; /* 移动端图片可以小一点 */
+                order: -1; /* 将图片放在文字上方 */
+                align-self: center; /* 居中对齐 */
+            }
+             .profile-layout-container .profile-grid {
+                 /* Reset grid settings for stacking */
+                 grid-template-columns: 1fr; /* Ensure single column */
+                 gap: 1.5rem;
+             }
+            .profile-layout-container .profile-item {
+                 /* Ensure mobile styles are applied correctly */
+                 padding: 1.2rem 1.5rem;
+                 background: rgba(255, 255, 255, 0.04);
+                 border-radius: 16px;
+            }
+            /* End Profile Card Responsive */
+
+            .relation-card { flex-basis: 280px; padding: 1.5rem; }
+            .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+            .achievements-container { grid-template-columns: 1fr; }
+            .achievement-image { height: 140px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">ぼっちランド</div>
+        <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile"> <i class="fab fa-github fa-lg" style="color: rgba(255,255,255,0.85)"></i> </a>
+    </header>
+
+    <div class="hero">
+        <div class="carousel-inner">
+             <div class="carousel-item" style="background-image: url('https://s1.imagehub.cc/images/2025/05/03/cd6028b67d2abef93de52cdd3b21913d.png')"></div>
+            <div class="carousel-item" style="background-image: url('https://s1.imagehub.cc/images/2025/05/03/bf720750ca60cb6a50cd3a663e9942f6.png')"></div>
+            <div class="carousel-item" style="background-image: url('https://s1.imagehub.cc/images/2025/05/03/e22d5b7d371a1bcd38008e407c460298.png')"></div>
+            <div class="carousel-item" style="background-image: url('https://s1.imagehub.cc/images/2025/05/03/3e8b4cc04d065a049ec76a397445fe82.png')"></div>
+            <div class="carousel-item" style="background-image: url('https://s1.imagehub.cc/images/2025/05/03/789c225562b61ac07d6686ae47f2f7c5.png')"></div>
+             <div class="carousel-item" style="background-image: url('https://s1.imagehub.cc/images/2025/05/03/cd6028b67d2abef93de52cdd3b21913d.png')"></div>
+        </div>
+    </div>
+
+    <main class="content">
+        <section class="card" aria-labelledby="intro-heading">
+             <h1 id="intro-heading">Hi，朋友，你好！</h1>
+            <p>如果你还不了解波奇酱（后藤一里）的话，这个页面可能会帮到你！欢迎访问本网站，详细了解这位才华横溢又极度社恐的吉他少女。</p>
+
+            <h2>波奇酱简介</h2>
+            <p>一位极度害羞、社交恐惧、但内心蕴藏着巨大音乐热情的少女，常常沉浸在奇特的自我妄想中。平时沉默寡言，与人交流时会高度紧张甚至“宕机”，但只要拿起心爱的吉他，就能化身「吉他英雄」，展现出令人惊叹的演奏技巧。虽然她总是自我否定、缺乏自信，但她正努力地在“结束乐队”中寻找属于自己的位置和光芒。</p>
+        </section>
+
+        <section class="card" aria-labelledby="profile-heading">
+            <h2 id="profile-heading">波奇酱是谁？</h2>
+
+            <div class="profile-layout-container">
+
+                <div class="profile-tachi-e">
+                     <img src="https://s1.imagehub.cc/images/2025/05/03/f7919e583364197ab3f803f7fbc283aa.webp" alt="后藤一里 立绘" loading="lazy">
+                    </div>
+
+                <div class="profile-grid">
+                    <div class="profile-item">
+                        <h3>基本档案</h3>
+                        <p><strong>本名：</strong>後藤（ごとう）ひとり (Gotō Hitori)</p>
+                        <p><strong>别名：</strong>小孤独／小波奇／吉他英雄 (guitarhero)</p>
+                        <p><strong>生日：</strong>2月21日</p>
+                        <p><strong>年龄：</strong>15–17 岁</p>
+                        <p><strong>身高：</strong>156 cm</p>
+                        <p><strong>体重：</strong>约 50 kg</p>
+                        <p><strong>血型：</strong>O 型</p>
+                        <p><strong>星座：</strong>双鱼座</p>
+                        <p><strong>国籍：</strong>日本</p>
+                        <p><strong>居住地：</strong>下北泽附近</p>
+                        <p><strong>身份：</strong>秀华高中学生 /「结束乐队」主音吉他手 & 作词担当</p>
+                        <p><strong>声优 (CV)：</strong>青山吉能</p>
+                    </div>
+                    <div class="profile-item">
+                         <h3>人物概述</h3>
+                         <p>后藤一里，粉丝爱称为「波奇酱」，是热门动画《孤独摇滚！》（ぼっち・ざ・ろっく！）的主角。她是一名患有严重社交恐惧症的高中生。</p>
+                         <p>作为乐队的吉他手，她也是一位停不下来的“妄想家”。内心深处渴望在乐队活动中闪闪发光、受人欢迎，但现实中的社恐让她步履维艰。在加入乐队前，她只敢躲在房间的衣柜里弹吉他，并将演奏视频以「guitarhero」的名义匿名上传到网络，意外地积累了相当高的人气。</p>
+                    </div>
+                </div></div> </section>
+
+        <section class="card" aria-labelledby="relations-heading">
+            <h2 id="relations-heading">人际关系</h2>
+            <div class="relation-scroll">
+                <div class="relation-card">
+                    <h3>喜多郁代 (Kita Ikuyo)</h3>
+                    <p>「结束乐队」的主唱兼节奏吉他手，阳光开朗的现充美少女，社交能力点满。最初为了接近心仪的凉而加入乐队，后来真心爱上乐队和音乐。她是波奇酱生命中如同太阳般的存在，用她的活力和直率不断敲开波奇封闭的心门。两人在互相影响中共同成长，是波奇在乐队中最亲近的朋友之一。</p>
+                </div>
+                <div class="relation-card">
+                    <h3>伊地知虹夏 (Ijichi Nijika)</h3>
+                    <p>「结束乐队」的鼓手和团队核心，性格温柔体贴，是乐队的“妈妈”和粘合剂。她是发掘波奇才能并将她“捡”进乐队的关键人物。虹夏无微不至的关怀和鼓励是支撑波奇前进的重要力量。她继承姐姐的梦想，决心让“结束乐队”成为出色的乐队。</p>
+                </div>
+                <div class="relation-card">
+                    <h3>山田凉 (Yamada Ryō)</h3>
+                    <p>「结束乐队」的贝斯手和作曲担当，来自富裕家庭却特立独行，常常做出吃草等怪异行为。外表冷酷少言，内心却很重视朋友和音乐。她是波奇音乐上的知音，最早认可波奇的吉他实力。虽然有时会说出“你的社恐很有趣”之类的话吓到波奇，但总能在关键时刻给予冷静而中肯的建议。</p>
+                </div>
+                <div class="relation-card">
+                    <h3>后藤二里 (Gotō Futari)</h3>
+                    <p>后藤一里的妹妹，思维成熟、吐槽犀利的小学生。经常毫不留情地戳穿姐姐的社恐行为（例如“姐姐又躲进壁橱里了”）。虽然看起来毒舌，但实际上非常关心和支持姐姐，是家里最理解一里的人之一。有时也会对姐姐的乐队活动表现出兴趣。</p>
+                </div>
+                 <div class="relation-card">
+                    <h3>伊地知星歌 (Ijichi Seika)</h3>
+                    <p>虹夏的姐姐，Livehouse "STARRY" 的店长。外表看似冷漠严格（傲娇），实际上非常关心妹妹和“结束乐队”的成长。她为乐队提供了练习和演出的场所，并在经营和音乐上给予指导。虽然嘴上不饶人，但经常默默帮助她们，是乐队可靠的后盾。</p>
+                </div>
+                 <div class="relation-card">
+                    <h3>广井菊理 (Hiroi Kikuri)</h3>
+                    <p>地下乐队 "SICK HACK" 的贝斯手兼主唱，一个嗜酒如命的贝斯天才。在公园偶遇卖艺（失败）的波奇，并给予了她鼓励和街头演出的机会。虽然总是喝得醉醺醺，但在音乐上非常可靠，是波奇在校外遇到的重要前辈和引导者。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card" aria-labelledby="personality-heading">
+            <h2 id="personality-heading">人物性格</h2>
+            <ul>
+                <li>极度社交恐惧，与人交流困难，容易陷入恐慌或“融化”。</li>
+                <li>内心戏异常丰富，是重度“妄想症患者”，脑内小剧场不断。</li>
+                <li>习惯性自我否定，缺乏自信，容易受到打击。</li>
+                <li>渴望被关注、被认可，梦想成为受欢迎的乐队成员。</li>
+                <li>善良、单纯，虽然胆怯，但在关键时刻会为了乐队和朋友鼓起勇气。</li>
+                <li>拥有惊人的吉他天赋和演奏技巧（网络上的「吉他英雄」）。</li>
+                <li>不擅长直接表达情感，但会通过音乐或奇特行为流露。</li>
+                <li>在特定条件下（如穿上演出服、喝醉酒）会变得异常大胆或不同。</li>
+            </ul>
+        </section>
+
+        <section class="card" aria-labelledby="gallery-heading">
+            <h2 id="gallery-heading">波奇图集</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item"> <img src="https://s1.imagehub.cc/images/2025/05/03/34c1abcc5a1153fe8c9ea35c3ca41706.jpg" alt="波奇酱 表情包 1"> </div>
+                <div class="gallery-item"> <img src="https://s1.imagehub.cc/images/2025/05/03/21dfc66cbc7a5bc99ca0d42f2080a797.jpg" alt="波奇酱 表情包 2"> </div>
+                <div class="gallery-item"> <img src="https://s1.imagehub.cc/images/2025/05/03/eb33c0da58ce531ce1f6436f1f4f3131.jpg" alt="波奇酱 演出服"> </div>
+                <div class="gallery-item"> <img src="https://s1.imagehub.cc/images/2025/05/03/ee126db149ce9394b763949a88e1e39c.jpg" alt="波奇酱 可爱"> </div>
+                <div class="gallery-item"> <img src="https://s1.imagehub.cc/images/2025/05/03/d96da46cda69ba1e98b146273d7b26f4.jpg" alt="波奇酱 Q版"> </div>
+                <div class="gallery-item"> <img src="https://s1.imagehub.cc/images/2025/05/03/cfa87c31b058d36004c7c049cdd1c7f8.jpg" alt="波奇酱 融化"> </div>
+                <div class="gallery-item"> <img src="https://s1.imagehub.cc/images/2025/05/03/1b1146c8a3bd49e598ceda24d1de7d30.jpg" alt="波奇酱 吉他"> </div>
+                <div class="gallery-item"> <img src="https://s1.imagehub.cc/images/2025/05/03/4739e0beaa65b7fcb910d673fd4a9a36.jpg" alt="波奇酱 震惊"> </div>
+                <div class="gallery-item"> <img src="https://s1.imagehub.cc/images/2025/05/03/3fe612cbea08a76bef8f50d54587be44.jpg" alt="波奇酱 乐队合影"> </div>
+                <div class="gallery-item"> <img src="https://s1.imagehub.cc/images/2025/05/03/f7a6c70835fcd71e93f324e3ae7cb570.jpg" alt="波奇酱 校服"> </div>
+            </div>
+        </section>
+
+        <section class="card" aria-labelledby="achievements-heading">
+            <h2 id="achievements-heading">主要战绩</h2>
+            <div class="achievements-container">
+                <div class="achievement-card">
+                    <a href="https://img.moegirl.org.cn/common/7/76/22-isml-autumn-winner.png" target="_blank" rel="noopener noreferrer" class="achievement-link">
+                        <img src="https://img.moegirl.org.cn/common/7/76/22-isml-autumn-winner.png" alt="2022世萌秋季赛冠军" class="achievement-image" loading="lazy">
+                        <p class="achievement-caption">2022 ISML 秋季赛冠军</p>
+                    </a>
+                </div>
+                <div class="achievement-card">
+                    <a href="https://img.moegirl.org.cn/common/e/ea/第八届天使动漫萌战秋季篇冠军.png" target="_blank" rel="noopener noreferrer" class="achievement-link">
+                        <img src="https://img.moegirl.org.cn/common/e/ea/第八届天使动漫萌战秋季篇冠军.png" alt="第八届天使动漫萌战冠军" class="achievement-image" loading="lazy">
+                        <p class="achievement-caption">第八届天使动漫萌战 秋季篇冠军</p>
+                    </a>
+                </div>
+                <div class="achievement-card">
+                    <a href="https://img.moegirl.org.cn/common/6/65/22ismlshenshengtouhuan.jpeg" target="_blank" rel="noopener noreferrer" class="achievement-link">
+                        <img src="https://img.moegirl.org.cn/common/6/65/22ismlshenshengtouhuan.jpeg" alt="2022 R萌年度总冠军" class="achievement-image" loading="lazy">
+                        <p class="achievement-caption">2022 Best Girl Contest 年度总冠军</p>
+                    </a>
+                </div>
+            </div>
+            <p class="achievement-footer">波奇酱在各大动漫角色人气投票中屡获佳绩！</p>
+        </section>
+
+        <section class="card" aria-label="孤独摇滚 OP">
+             <h2>相关影音</h2>
+             <div class="video-container">
+
+                  <iframe style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;" src="https://player.bilibili.com/player.html?bvid=BV1ae4y1q7nz&page=1&high_quality=1&danmaku=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+             </div>
+             <p style="text-align: center; font-size: 0.9rem;">孤独摇滚！OP -「青春コンプレックス」</p>
+        </section>
+    </main>
+
+    <footer>
+        <p><a href="https://home.linmohan.fun/sub/pay.html" target="_blank" rel="noopener noreferrer">支持这个项目</a></p>
+        <p>页面内容仅供粉丝交流学习，素材版权归原作者所有。</p>
+        <p>&copy; 2025 <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">林墨瀚</a></p>
+        <p><a href="https://icp.gov.moe/?keyword=20231500" target="_blank" rel="noopener noreferrer">萌ICP备20231500号</a></p>
+    </footer>
+</body>
+</html>

@@ -1,6 +1,8 @@
 # 🎸 boochi.fans
 
+[![author](https://img.shields.io/badge/author-LinMohan-blue)](https://github.com/LINMOH)
 [![website](https://img.shields.io/badge/site-boochi.fans-ff69b4?logo=google-chrome)](https://boochi.fans)
+[![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 > 🧍‍♀️「一个人的乐队也能响彻世界。」
 

@@ -66,3 +66,8 @@ cd boochi.fans
 由 林墨瀚（Lin Mohan） 开发维护
 GitHub: [@LINMOH](https://github.com/LINMOH)
 
+---
+
+## License
+
+本仓库遵循 [GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.html) 许可协议。
